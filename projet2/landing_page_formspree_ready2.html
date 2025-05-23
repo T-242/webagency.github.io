@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <form id="contact-form" class="bg-white shadow-md rounded-lg p-8 space-y-6" data-aos="fade-up" data-aos-delay="200">
+  <!-- Vos champs existants... -->
+  <div class="text-center">
+    <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition">
+      <span id="submit-text">Envoyer</span>
+      <span id="submit-spinner" class="hidden"><i class="fas fa-spinner fa-spin"></i></span>
+    </button>
+  </div>
+  <div id="form-message" class="hidden text-center py-2 rounded"></div>
+  <input type="text" name="_gotcha" style="display:none" />
+</form>
+
+<script>
+  // Gestion AJAX du formulaire
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const submitText = document.getElementById('submit-text');
+    const spinner = document.getElementById('submit-spinner');
+    const messageDiv = document.getElementById('form-message');
+    
+    // Afficher le spinner
+    submitText.classList.add('hidden');
+    spinner.classList.remove('hidden');
+    submitBtn.disabled = true;
+    messageDiv.classList.add('hidden');
+    
+    // Envoi AJAX
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        form.reset();
+        messageDiv.textContent = data.message;
+        messageDiv.classList.remove('hidden', 'text-red-500');
+        messageDiv.classList.add('bg-green-100', 'text-green-700');
+      } else {
+        messageDiv.textContent = data.message;
+        messageDiv.classList.remove('hidden', 'bg-green-100', 'text-green-700');
+        messageDiv.classList.add('bg-red-100', 'text-red-500');
+      }
+    })
+    .catch(error => {
+      messageDiv.textContent = 'Une erreur réseau est survenue. Veuillez réessayer.';
+      messageDiv.classList.remove('hidden', 'bg-green-100', 'text-green-700');
+      messageDiv.classList.add('bg-red-100', 'text-red-500');
+    })
+    .finally(() => {
+      submitText.classList.remove('hidden');
+      spinner.classList.add('hidden');
+      submitBtn.disabled = false;
+      messageDiv.classList.remove('hidden');
+    });
+  });
+</script>
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Agency - Votre agence digitale</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <meta name="description" content="Web Agency - Création de sites web, SEO et design UX/UI à votre service.">
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="bg-white text-gray-800 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <img src="c:\Users\user\Desktop\projet2\image\log.png" alt="Web Agency Logo" class="h-10 w-auto" />
+        <nav class="hidden md:flex space-x-6">
+          <a href="#about" class="hover:text-blue-600">À propos</a>
+          <a href="#services" class="hover:text-blue-600">Services</a>
+          <a href="#testimonials" class="hover:text-blue-600">Témoignages</a>
+          <a href="#contact" class="hover:text-blue-600">Contact</a>
+          <div class="flex space-x-4 mt-4 md:mt-0">
+  <a href="https://www.facebook.com/votrepage" target="_blank" class="hover:text-blue-200 transition">
+    <i class="fab fa-facebook-f"></i>
+  </a>
+  <!-- Autres réseaux sociaux... -->
+</div>
+        </nav>
+        <button class="md:hidden text-gray-700" id="menu-toggle">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+      <!-- Menu mobile -->
+      <div class="md:hidden hidden bg-white py-2 px-4 shadow-md" id="mobile-menu">
+        <a href="#about" class="block py-2 hover:text-blue-600">À propos</a>
+        <a href="#services" class="block py-2 hover:text-blue-600">Services</a>
+        <a href="#testimonials" class="block py-2 hover:text-blue-600">Témoignages</a>
+        <a href="#contact" class="block py-2 hover:text-blue-600">Contact</a>
+      </div>
+      
+    </header>
+
+    <section class="bg-blue-600 text-white py-20 px-4 text-center">
+      <div class="max-w-3xl mx-auto" data-aos="fade-up">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Créons ensemble votre présence digitale</h2>
+        <p class="text-lg md:text-xl mb-6">Des solutions web sur-mesure pour faire briller votre entreprise.</p>
+        <a href="#contact" class="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-200 transition">Nous contacter</a>
+      </div>
+    </section>
+
+    <!-- À propos -->
+    <section id="about" class="py-20 px-4 bg-gray-100">
+      <div class="max-w-5xl mx-auto text-center" data-aos="fade-up">
+        <h3 class="text-3xl font-bold mb-6 text-gray-800">À propos de Web Agency</h3>
+        <p class="text-gray-600 text-lg leading-relaxed">
+          Web Agency est une agence digitale spécialisée dans la création de sites web modernes, performants et sur-mesure. 
+          Nous accompagnons les entreprises de toutes tailles dans leur transformation digitale.
+        </p>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-20 px-4 bg-white">
+      <div class="max-w-6xl mx-auto text-center">
+        <h3 class="text-3xl font-bold mb-10 text-gray-800" data-aos="fade-up">Nos Services</h3>
+        <div class="grid gap-10 md:grid-cols-3">
+          <!-- Service 1 -->
+          <div class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition" data-aos="fade-up" data-aos-delay="100">
+            <div class="text-blue-600 mb-4 text-3xl">
+              <i class="fas fa-laptop-code"></i>
+            </div>
+            <h4 class="text-xl font-semibold mb-2 text-blue-600">Création de site web</h4>
+            <p class="text-gray-600">
+              Des sites vitrines ou e-commerce modernes, responsives et optimisés SEO.
+            </p>
+          </div>
+          <!-- Service 2 -->
+          <div class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition" data-aos="fade-up" data-aos-delay="200">
+            <div class="text-blue-600 mb-4 text-3xl">
+              <i class="fas fa-paint-brush"></i>
+            </div>
+            <h4 class="text-xl font-semibold mb-2 text-blue-600">Design UX/UI</h4>
+            <p class="text-gray-600">
+              Une expérience utilisateur fluide et un design sur-mesure pour vos clients.
+            </p>
+          </div>
+          <!-- Service 3 -->
+          <div class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition" data-aos="fade-up" data-aos-delay="300">
+            <div class="text-blue-600 mb-4 text-3xl">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h4 class="text-xl font-semibold mb-2 text-blue-600">Référencement SEO</h4>
+            <p class="text-gray-600">
+              Améliorez votre visibilité sur Google grâce à une stratégie SEO efficace.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-20 px-4 bg-white">
+      <div class="max-w-6xl mx-auto text-center">
+        <h3 class="text-3xl font-bold mb-10 text-gray-800" data-aos="fade-up">Témoignages</h3>
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div class="bg-gray-100 p-6 rounded-lg shadow" data-aos="fade-up" data-aos-delay="100">
+            <div class="text-yellow-400 mb-3">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p class="text-gray-700 italic">"Grâce à Web Agency, notre site a doublé son trafic en 3 mois !"</p>
+            <p class="mt-4 font-semibold text-blue-600">— Marie Dupont, CEO StartupX</p>
+          </div>
+          <div class="bg-gray-100 p-6 rounded-lg shadow" data-aos="fade-up" data-aos-delay="200">
+            <div class="text-yellow-400 mb-3">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p class="text-gray-700 italic">"Une équipe réactive, à l'écoute et des résultats concrets."</p>
+            <p class="mt-4 font-semibold text-blue-600">— Julien Bernard, Fondateur de CaféBio</p>
+          </div>
+          <div class="bg-gray-100 p-6 rounded-lg shadow" data-aos="fade-up" data-aos-delay="300">
+            <div class="text-yellow-400 mb-3">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <p class="text-gray-700 italic">"Livraison dans les temps avec un résultat au-delà de nos attentes."</p>
+            <p class="mt-4 font-semibold text-blue-600">— Sophie Martin, Directrice Marketing</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-20 px-4 bg-gray-100">
+      <div class="max-w-4xl mx-auto">
+        <h3 class="text-3xl font-bold text-center mb-10 text-gray-800" data-aos="fade-up">Nous contacter</h3>
+        
+        <div class="text-center mb-6" data-aos="fade-up" data-aos-delay="100">
+          <button class="bg-blue-100 text-blue-600 px-4 py-2 rounded-full font-semibold">
+            <i class="fas fa-at"></i> contact@webagency.com
+          </button>
+          <button class="bg-blue-100 text-blue-600 px-4 py-2 rounded-full font-semibold ml-4">
+            <i class="fas fa-phone"></i> +242053455230
+          </button>
+        </div>
+
+        <form action="https://formspree.io/f/xqaqoydp" method="POST" class="bg-white shadow-md rounded-lg p-8 space-y-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label for="nom" class="block mb-2 font-medium text-gray-700">Nom</label>
+              <input type="text" id="nom" name="nom" required class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <div>
+              <label for="email" class="block mb-2 font-medium text-gray-700">Email</label>
+              <input type="email" id="email" name="email" required class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+          </div>
+          <div>
+            <label for="service" class="block mb-2 font-medium text-gray-700">Service intéressé</label>
+            <select id="service" name="service" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="">Sélectionnez un service</option>
+              <option value="creation-site">Création de site web</option>
+              <option value="design">Design UX/UI</option>
+              <option value="seo">Référencement SEO</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+          <div>
+            <label for="message" class="block mb-2 font-medium text-gray-700">Message</label>
+            <textarea id="message" name="message" rows="5" required class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition">Envoyer</button>
+          </div>
+          <input type="text" name="_gotcha" style="display:none" />
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <!-- Section Réseaux Sociaux avec style moderne -->
+<section class="py-16 bg-gradient-to-r from-blue-50 to-gray-50">
+  <div class="max-w-5xl mx-auto px-4 text-center">
+    <h3 class="text-3xl font-bold mb-6 text-gray-800" data-aos="fade-up">Rejoignez notre communauté</h3>
+    <p class="text-lg text-gray-600 mb-10 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+      Suivez-nous pour des conseils web, des offres exclusives et des inspirations quotidiennes.
+    </p>
+    
+    <div class="flex flex-wrap justify-center gap-6" data-aos="fade-up" data-aos-delay="200">
+      <!-- Facebook -->
+      <a href="https://facebook.com/votrepage" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         class="social-icon facebook hover:animate-pulse">
+        <i class="fab fa-facebook-f"></i>
+        <span>Facebook</span>
+      </a>
+      
+      <!-- Instagram -->
+      <a href="https://instagram.com/votrecompte" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         class="social-icon instagram hover:animate-bounce">
+        <i class="fab fa-instagram"></i>
+        <span>Instagram</span>
+      </a>
+      
+      <!-- Twitter -->
+      <a href="https://twitter.com/votrecompte" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         class="social-icon twitter hover:animate-pulse">
+        <i class="fab fa-twitter"></i>
+        <span>Twitter</span>
+      </a>
+      
+      <!-- LinkedIn -->
+      <a href="https://linkedin.com/company/votreentreprise" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         class="social-icon linkedin hover:animate-bounce">
+        <i class="fab fa-linkedin-in"></i>
+        <span>LinkedIn</span>
+      </a>
+      
+      <!-- TikTok (optionnel) -->
+      <a href="https://tiktok.com/@votrecompte" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         class="social-icon tiktok hover:animate-pulse">
+        <i class="fab fa-tiktok"></i>
+        <span>TikTok</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .social-icon {
+    @apply flex flex-col items-center justify-center w-24 h-24 rounded-2xl shadow-lg 
+           text-white text-2xl font-medium transition-all duration-300 transform 
+           hover:-translate-y-2 hover:shadow-xl;
+  }
+  
+  .social-icon span {
+    @apply mt-2 text-sm;
+  }
+  
+  .facebook {
+    @apply bg-blue-600 hover:bg-blue-700;
+  }
+  
+  .instagram {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    @apply hover:opacity-90;
+  }
+  
+  .twitter {
+    @apply bg-blue-400 hover:bg-blue-500;
+  }
+  
+  .linkedin {
+    @apply bg-blue-700 hover:bg-blue-800;
+  }
+  
+  .tiktok {
+    @apply bg-black hover:bg-gray-800;
+  }
+</style>
+</footer>
+
+    <!-- Scripts -->
+   <script>
+  // Validation du formulaire avant soumission
+  const contactForm = document.querySelector('#contact form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+      
+      // Validation basique
+      if (!email.includes('@') || !email.includes('.')) {
+        alert('Veuillez entrer une adresse email valide');
+        e.preventDefault();
+        return;
+      }
+      
+      if (message.length < 10) {
+        alert('Votre message doit contenir au moins 10 caractères');
+        e.preventDefault();
+        return;
+      }
+      
+      // Si tout est valide, on peut ajouter un loader
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+      submitBtn.disabled = true;
+    });
+  }
+
+  // Animation pour les éléments lorsqu'ils deviennent visibles
+  const animateOnScroll = () => {
+    const elements = document.querySelectorAll('[data-aos]');
+    elements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      const isVisible = (rect.top <= window.innerHeight && rect.bottom >= 0);
+      
+      if (isVisible && !el.classList.contains('aos-animate')) {
+        el.classList.add('aos-animate');
+      }
+    });
+  };
+
+  // Écouteur de scroll
+  window.addEventListener('scroll', animateOnScroll);
+  animateOnScroll(); // Exécuter une fois au chargement
+</script>
+  </body>
+</html>
